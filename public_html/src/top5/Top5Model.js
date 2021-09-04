@@ -131,7 +131,6 @@ export default class Top5Model {
     }
 
     saveLists() {
-        // WILL THIS WORK? @todo
         let top5ListsString = JSON.stringify(this.top5Lists);
         localStorage.setItem("recent_work", top5ListsString);
     }

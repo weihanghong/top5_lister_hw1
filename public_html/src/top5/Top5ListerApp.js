@@ -32,7 +32,7 @@ export class Top5ListerApp {
     /**
      * launch
      * 
-     * @param {*} testFile The JSON file containing initial todo lists of data.
+     * @param {*} testFile The JSON file containing initial top 5 lists of data.
      */
     launch() {
         // FIRST TRY AND GET THE LISTS FROM LOCAL STORAGE
