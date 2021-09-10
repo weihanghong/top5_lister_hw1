@@ -4,7 +4,7 @@
  * This file provides responses for all user interface interactions.
  * 
  * @author McKilla Gorilla
- * @author ?
+ * @author Wei Hang Hong
  */
 export default class Top5Controller {
     constructor() {

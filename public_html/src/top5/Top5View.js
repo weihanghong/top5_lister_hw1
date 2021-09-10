@@ -5,7 +5,7 @@
  * for loading data into our controls and building other UI controls.
  * 
  * @author McKilla Gorilla
- * @author ?
+ * @author Wei Hang Hong
  */
 export default class Top5View {
     // REFRESHES ALL THE LISTS IN THE LEFT SIDEBAR

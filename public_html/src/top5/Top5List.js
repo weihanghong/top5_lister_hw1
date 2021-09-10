@@ -4,7 +4,7 @@
  * This class represents a list with all the items in our Top5 list.
  * 
  * @author McKilla Gorilla
- * @author ?
+ * @author Wei Hang Hong
  */
 export default class Top5List {
     constructor(initId) {

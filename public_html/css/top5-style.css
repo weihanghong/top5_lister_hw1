@@ -112,8 +112,18 @@ body {
   color: white;
 }
 
+.selected-list-card:hover {
+  background-color: var(--swatch-contrast);
+  color: white;
+}
+
 .unselected-list-card {
   background-color: var(--swatch-complement);
+}
+
+.unselected-list-card:hover {
+  background-color: var(--swatch-contrast);
+  color: white;
 }
 
 .list-card-button {
