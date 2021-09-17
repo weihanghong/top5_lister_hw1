@@ -98,6 +98,7 @@ export default class Top5Model {
             list = this.top5Lists[i];
             if (list.id === id) {
                 // THIS IS THE LIST TO LOAD
+                if (this.currentList == list) return;
                 this.currentList = list;
                 this.view.update(this.currentList);
                 this.view.highlightList(id, this.currentList.getName());
@@ -137,7 +138,7 @@ export default class Top5Model {
         localStorage.setItem("recent_work", top5ListsString);
     }
 
-    restoreList() {
+    restoreList() { //USELESS
         this.view.update(this.currentList);
     }
 

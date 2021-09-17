@@ -18,10 +18,13 @@ export default class Top5Controller {
 
     initHandlers() {
         // SETUP THE TOOLBAR BUTTON HANDLERS
-        document.getElementById("add-list-button").onmousedown = (event) => {
-            let newList = this.model.addNewList("Untitled", ["?","?","?","?","?"]);            
-            this.model.loadList(newList.id);
-            this.model.saveLists();
+        let addNew = document.getElementById("add-list-button");
+        addNew.onmousedown = (event) => {
+            if (!addNew.classList.contains("disabled")) {
+                let newList = this.model.addNewList("Untitled", ["?","?","?","?","?"]);            
+                this.model.loadList(newList.id);
+                this.model.saveLists();
+            }
         }
         document.getElementById("undo-button").onmousedown = (event) => {
             this.model.undo();
@@ -51,6 +54,8 @@ export default class Top5Controller {
 
                     item.appendChild(textInput);
 
+                    textInput.focus();
+
                     textInput.ondblclick = (event) => {
                         this.ignoreParentClick(event);
                     }
@@ -60,13 +65,20 @@ export default class Top5Controller {
                         }
                     }
                     textInput.onblur = (event) => {
-                        this.model.restoreList();
+                        this.model.addChangeItemTransaction(i-1, event.target.value);
                     }
                 }
             }
 
-            item.ondrag = (event) => {
-                console.log("drag start");
+            item.ondragstart = (event) => {
+                event.dataTransfer.setData("Text", event.target.id);
+            }
+
+            item.ondrop = (event) => {
+                event.preventDefault();
+                if(event.target.className == "top5-item") {
+                    console.log("good");
+                }
             }
         }
     }
@@ -75,10 +87,12 @@ export default class Top5Controller {
         let list = document.getElementById("top5-list-" + id);
         // FOR SELECTING THE LIST
         list.onmousedown = (event) => {
-            this.model.unselectAll();
-
-            // GET THE SELECTED LIST
-            this.model.loadList(id);
+            let selected = this.model.currentList;
+            if (selected==null || selected.id !== id) {
+                this.model.unselectAll();
+                // GET THE SELECTED LIST
+                this.model.loadList(id);
+            }
         }
         // FOR DELETING THE LIST
         document.getElementById("delete-list-" + id).onmousedown = (event) => {
@@ -121,16 +135,23 @@ export default class Top5Controller {
             list.appendChild(textInput);
             list.appendChild(deleteButton); 
 
+            let addNew = document.getElementById("add-list-button");
+            addNew.classList.add("disabled");
+
+            textInput.focus();
+
             textInput.ondblclick = (event) => {
                 this.ignoreParentClick(event);
             }
             textInput.onkeydown = (event) => {
                 if (event.key === 'Enter') {
                     this.model.addChangeListTransaction(id, event.target.value);
+                    addNew.classList.remove("disabled");
                 }
             }
             textInput.onblur = (event) => {
-                this.model.restoreList();
+                this.model.addChangeListTransaction(id, event.target.value);
+                addNew.classList.remove("disabled");
             }
         }
     }
