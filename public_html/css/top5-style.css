@@ -156,6 +156,11 @@ body {
   border-width: 0px;
 }
 
+.top5-button:hover {
+  background-color: var(--swatch-contrast);
+  color: white;
+}
+
 #edit-numbering {
   position:absolute;
   left:0%;
@@ -206,5 +211,6 @@ input {
 }
 
 .disabled:hover {
-  color: var(--swatch-neutral);
+  background-color: lightgray;
+  color: black;
 }
