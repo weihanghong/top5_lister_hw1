@@ -209,7 +209,11 @@ export default class Top5Model {
     }
 
     close() {
-        this.view.clearWorkspace();
-        this.view.unhighlightList(this.currentList.id);
+        if (this.hasCurrentList()) {
+            this.view.clearWorkspace();
+            this.view.unhighlightList(this.currentList.id);
+            this.currentList = null;
+        }
+        this.view.updateToolbarButtons(this);
     }
 }
