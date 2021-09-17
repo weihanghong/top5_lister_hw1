@@ -64,6 +64,10 @@ export default class Top5Controller {
                     }
                 }
             }
+
+            item.ondrag = (event) => {
+                console.log("drag start");
+            }
         }
     }
 

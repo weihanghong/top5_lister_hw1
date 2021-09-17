@@ -5,7 +5,7 @@ export default class DeleteList_Transaction extends jsTPS_Transaction {
         super();
         this.model = initModel;
         this.id = initId;
-        this.removed = null;
+        this.removed = [];
     }
 
     doTransaction() {

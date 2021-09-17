@@ -86,10 +86,10 @@ export default class Top5View {
         removed.innerHTML = "";
     }
 
-    updateAllList(size) {
+    updateAllList(model, size) {
         for (let i=0; i<size; i++) {
-            let list = this.model.getList(i);
-            updateList(list, list.getId());
+            let list = model.getList(i);
+            this.updateList(list, list.id);
         }
     }
 

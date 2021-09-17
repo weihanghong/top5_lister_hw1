@@ -158,6 +158,7 @@ export default class Top5Model {
         this.currentList.items[id] = text;
         this.view.update(this.currentList);
         this.saveLists();
+        this.view.enableButton("undo-button");
     }
 
     changeList(id, text) {
@@ -166,6 +167,7 @@ export default class Top5Model {
         this.sortLists();
         this.view.updateList(list, id);
         this.view.highlightList(id, list.name);
+        this.view.enableButton("undo-button");
         this.saveLists();
     }
 
@@ -183,14 +185,21 @@ export default class Top5Model {
         this.view.unhighlightList(id);
         this.saveLists();
         this.view.refreshLists(this.top5Lists);
+        this.view.enableButton("undo-button");
+        this.view.disableButton("close-button");
         return removed;
     }
 
     addList(id, list) {
-        this.top5Lists.splice(id, 0, list);
-        this.view.updateAllList(this.top5Lists.length);
-        this.saveLists;
-        this.view.refreshLists(this.top5Lists);
+        this.top5Lists.push(list.pop());
+        this.sortLists();
+        this.view.updateAllList(this, this.top5Lists.length);
+        this.saveLists();
+        this.view.enableButton("undo-button");
+    }
+
+    moveItem(i1, i2) {
+        this.view.enableButton("undo-button");
     }
 
     // SIMPLE UNDO/REDO FUNCTIONS
@@ -213,6 +222,7 @@ export default class Top5Model {
             this.view.clearWorkspace();
             this.view.unhighlightList(this.currentList.id);
             this.currentList = null;
+            this.tps.clearAllTransactions();
         }
         this.view.updateToolbarButtons(this);
     }
