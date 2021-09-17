@@ -78,6 +78,19 @@ export default class Top5View {
         deleteButton.setAttribute("type", "button");
         deleteButton.setAttribute("value", "\u2715");
         lst.appendChild(deleteButton);
+        this.controller.registerListSelectHandlers(id);
+    }
+
+    updateRemovedList(id) {
+        let removed = document.getElementById("top5-list-" + id);
+        removed.innerHTML = "";
+    }
+
+    updateAllList(size) {
+        for (let i=0; i<size; i++) {
+            let list = this.model.getList(i);
+            updateList(list, list.getId());
+        }
     }
 
     clearWorkspace() {

@@ -2,6 +2,7 @@ import jsTPS from "../common/jsTPS.js"
 import Top5List from "./Top5List.js";
 import ChangeItem_Transaction from "./transactions/ChangeItem_Transaction.js"
 import ChangeList_Transaction from "./transactions/ChangeList_Transaction.js";
+import DeleteList_Transaction from "./transactions/DeleteList_Transaction.js";
 
 /**
  * Top5Model.js
@@ -85,7 +86,7 @@ export default class Top5Model {
     unselectAll() {
         for (let i = 0; i < this.top5Lists.length; i++) {
             let list = this.top5Lists[i];
-            this.view.unhighlightList(i);
+            this.view.unhighlightList(list.getId());
         }
     }
 
@@ -99,7 +100,7 @@ export default class Top5Model {
                 // THIS IS THE LIST TO LOAD
                 this.currentList = list;
                 this.view.update(this.currentList);
-                this.view.highlightList(i);
+                this.view.highlightList(id);
                 found = true;
             }
             i++;
@@ -151,7 +152,7 @@ export default class Top5Model {
         let oldText = this.getList(this.getListIndex(id)).getName();
         let transaction = new ChangeList_Transaction(this, id, oldText, newText);
         this.tps.addTransaction(transaction);
-    }
+    }   
 
     changeItem(id, text) {
         this.currentList.items[id] = text;
@@ -162,8 +163,32 @@ export default class Top5Model {
     changeList(id, text) {
         let list = this.getList(this.getListIndex(id))
         list.setName(text);
+        this.sortLists();
         this.view.updateList(list, id);
         this.saveLists();
+    }
+
+    addDeleteListTransaction = (id) => {
+        let transaction = new DeleteList_Transaction(this, id);
+        this.tps.addTransaction(transaction);
+    }
+
+    deleteList(id) {
+        let iRemove = this.getListIndex(id);
+        let removed = this.top5Lists.splice(iRemove, 1);
+        this.currentList = null;
+        this.view.clearWorkspace();
+        this.view.updateRemovedList(id);
+        this.saveLists();
+        this.view.refreshLists(this.top5Lists);
+        return removed;
+    }
+
+    addList(id, list) {
+        this.top5Lists.splice(id, 0, list);
+        this.view.updateAllList(this.top5Lists.length);
+        this.saveLists;
+        this.view.refreshLists(this.top5Lists);
     }
 
     // SIMPLE UNDO/REDO FUNCTIONS

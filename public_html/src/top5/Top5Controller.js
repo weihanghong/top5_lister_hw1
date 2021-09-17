@@ -76,11 +76,20 @@ export default class Top5Controller {
             // VERIFY THAT THE USER REALLY WANTS TO DELETE THE LIST
             let modal = document.getElementById("delete-modal");
             this.listToDeleteIndex = id;
-            let listName = this.model.getList(id).getName();
+            let listName = this.model.getList(this.model.getListIndex(id)).getName();
             let deleteSpan = document.getElementById("delete-list-span");
             deleteSpan.innerHTML = "";
             deleteSpan.appendChild(document.createTextNode(listName));
             modal.classList.add("is-visible");
+            let confirm = document.getElementById("dialog-confirm-button");
+            confirm.onmouseup = (event) => {
+                this.model.addDeleteListTransaction(id);
+                modal.classList.remove("is-visible");
+            }
+            let cancel = document.getElementById("dialog-cancel-button");
+            cancel.onmouseup = (event) => {
+                modal.classList.remove("is-visible");
+            }
         }
         // FOR CHANGING NAME
         list.ondblclick = (ev) => {

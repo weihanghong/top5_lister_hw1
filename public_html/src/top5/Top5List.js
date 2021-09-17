@@ -34,4 +34,8 @@ export default class Top5List {
     moveItem(oldIndex, newIndex) {
         this.items.splice(newIndex, 0, this.items.splice(oldIndex, 1)[0]);
     }
+
+    getId() {
+        return this.id;
+    }
 }
