@@ -68,6 +68,18 @@ export default class Top5View {
         }
     }
 
+    updateList(list, id) {
+        let lst = document.getElementById("top5-list-" + id);
+        lst.innerHTML = "";
+        lst.appendChild(document.createTextNode(list.getName()));
+        let deleteButton = document.createElement("input");
+        deleteButton.setAttribute("id", "delete-list-" + id);
+        deleteButton.setAttribute("class", "list-card-button");
+        deleteButton.setAttribute("type", "button");
+        deleteButton.setAttribute("value", "\u2715");
+        lst.appendChild(deleteButton);
+    }
+
     clearWorkspace() {
         // REMOVE THE ITEMS
         for (let i = 0; i < 5; i++) {

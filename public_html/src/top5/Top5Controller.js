@@ -62,8 +62,9 @@ export default class Top5Controller {
     }
 
     registerListSelectHandlers(id) {
+        let list = document.getElementById("top5-list-" + id);
         // FOR SELECTING THE LIST
-        document.getElementById("top5-list-" + id).onmousedown = (event) => {
+        list.onmousedown = (event) => {
             this.model.unselectAll();
 
             // GET THE SELECTED LIST
@@ -80,6 +81,38 @@ export default class Top5Controller {
             deleteSpan.innerHTML = "";
             deleteSpan.appendChild(document.createTextNode(listName));
             modal.classList.add("is-visible");
+        }
+        // FOR CHANGING NAME
+        list.ondblclick = (ev) => {
+            // CLEAR THE TEXT
+            list.innerHTML = "";
+            
+            // ADD A TEXT FIELD
+            let textInput = document.createElement("input");
+            textInput.setAttribute("type", "text");
+            textInput.setAttribute("id", "list-card-text-" + id);
+            textInput.setAttribute("value", this.model.currentList.getName());
+
+            let deleteButton = document.createElement("input");
+            deleteButton.setAttribute("id", "delete-list-" + id);
+            deleteButton.setAttribute("class", "list-card-button");
+            deleteButton.setAttribute("type", "button");
+            deleteButton.setAttribute("value", "\u2715");
+
+            list.appendChild(textInput);
+            list.appendChild(deleteButton); 
+
+            textInput.ondblclick = (event) => {
+                this.ignoreParentClick(event);
+            }
+            textInput.onkeydown = (event) => {
+                if (event.key === 'Enter') {
+                    this.model.addChangeListTransaction(id, event.target.value);
+                }
+            }
+            textInput.onblur = (event) => {
+                this.model.restoreList();
+            }
         }
     }
 
