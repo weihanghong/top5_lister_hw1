@@ -111,11 +111,14 @@ export default class Top5View {
         button.classList.remove("disabled");
     }
 
-    highlightList(listId) {
+    highlightList(listId, name) {
         // HIGHLIGHT THE LIST
         let listCard = document.getElementById("top5-list-" + listId);
         listCard.classList.remove("unselected-list-card");
         listCard.classList.add("selected-list-card");
+        let statusBar = document.getElementById("top5-statusbar");
+        statusBar.innerHTML = "";
+        statusBar.appendChild(document.createTextNode(name));
     }
 
     unhighlightList(listId) {
@@ -123,6 +126,8 @@ export default class Top5View {
         let listCard = document.getElementById("top5-list-" + listId);
         listCard.classList.add("unselected-list-card");
         listCard.classList.remove("selected-list-card");
+        let statusBar = document.getElementById("top5-statusbar");
+        statusBar.innerHTML = "";
     }
 
     updateToolbarButtons(model) {

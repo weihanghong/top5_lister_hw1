@@ -38,7 +38,7 @@ body {
   background-image: linear-gradient(to bottom,         
   #b8b808, #636723);
   color: white;
-  font-size: 48pt;
+  font-size: 40pt;
   border-color: black;
   border-width: 2px;
   border-style: solid;
@@ -69,6 +69,9 @@ body {
   top: 90%;
   width: 100%;
   height: 10%;
+  text-align: center;
+  font-size: 40pt;
+  background-color: rgb(255,160,122);
 }
 
 #sidebar-heading {

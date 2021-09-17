@@ -100,7 +100,7 @@ export default class Top5Model {
                 // THIS IS THE LIST TO LOAD
                 this.currentList = list;
                 this.view.update(this.currentList);
-                this.view.highlightList(id);
+                this.view.highlightList(id, this.currentList.getName());
                 found = true;
             }
             i++;
@@ -165,6 +165,7 @@ export default class Top5Model {
         list.setName(text);
         this.sortLists();
         this.view.updateList(list, id);
+        this.view.highlightList(id, list.name);
         this.saveLists();
     }
 
@@ -179,6 +180,7 @@ export default class Top5Model {
         this.currentList = null;
         this.view.clearWorkspace();
         this.view.updateRemovedList(id);
+        this.view.unhighlightList(id);
         this.saveLists();
         this.view.refreshLists(this.top5Lists);
         return removed;
