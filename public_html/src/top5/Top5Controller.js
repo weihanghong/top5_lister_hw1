@@ -69,15 +69,24 @@ export default class Top5Controller {
                     }
                 }
             }
-
+            //item to move
             item.ondragstart = (event) => {
-                event.dataTransfer.setData("Text", event.target.id);
+                event.dataTransfer.setData("key", event.target.id);
+
             }
 
+            item.ondragover = (event) => {
+                event.preventDefault();
+            }
+
+            //destination
             item.ondrop = (event) => {
                 event.preventDefault();
-                if(event.target.className == "top5-item") {
-                    console.log("good");
+                if (event.target.className == "top5-item") {
+                    let data = event.dataTransfer.getData("key");
+                    let oldId = data.substring(5);
+                    let destId = event.target.id.substring(5);
+                    this.model.moveItem(parseInt(oldId), parseInt(destId));
                 }
             }
         }

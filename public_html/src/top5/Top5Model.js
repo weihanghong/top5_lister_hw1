@@ -199,7 +199,19 @@ export default class Top5Model {
         this.view.enableButton("undo-button");
     }
 
-    moveItem(i1, i2) {
+    moveItem(oldId, destId) {
+        let list = this.currentList;
+        if(oldId>destId) {
+            for(let i = oldId; i>destId; i--) {
+                list.moveItem(i-1, i-2);
+            }
+        } else {
+            for(let i = oldId; i<destId; i++) {
+                list.moveItem(i-1, i)
+            }
+        }
+        this.view.update(this.currentList);
+        this.saveLists();
         this.view.enableButton("undo-button");
     }
 
