@@ -86,7 +86,7 @@ export default class Top5Controller {
                     let data = event.dataTransfer.getData("key");
                     let oldId = data.substring(5);
                     let destId = event.target.id.substring(5);
-                    this.model.moveItem(parseInt(oldId), parseInt(destId));
+                    this.model.addMoveItemTransaction(parseInt(oldId), parseInt(destId));
                 }
             }
         }

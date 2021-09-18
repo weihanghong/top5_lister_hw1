@@ -3,6 +3,7 @@ import Top5List from "./Top5List.js";
 import ChangeItem_Transaction from "./transactions/ChangeItem_Transaction.js"
 import ChangeList_Transaction from "./transactions/ChangeList_Transaction.js";
 import DeleteList_Transaction from "./transactions/DeleteList_Transaction.js";
+import MoveItem_Transaction from "./transactions/MoveItem_Transaction.js";
 
 /**
  * Top5Model.js
@@ -197,6 +198,11 @@ export default class Top5Model {
         this.view.updateAllList(this, this.top5Lists.length);
         this.saveLists();
         this.view.enableButton("undo-button");
+    }
+
+    addMoveItemTransaction(oldId, destId) {
+        let transaction = new MoveItem_Transaction(this, oldId, destId);
+        this.tps.addTransaction(transaction);
     }
 
     moveItem(oldId, destId) {
